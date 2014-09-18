@@ -1,0 +1,27 @@
+{
+  "name": "pos-aggregator",
+  "version": "0.0.1",
+  "description": "Builds a parts-of-speech lookup table of collected strings",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/tleen/pos-aggregator.git"
+  },
+  "keywords": [
+    "pos",
+    "parts-of-speech",
+    "language"
+  ],
+  "author": {
+    "name" : "Tom Leen",
+    "email" : "tl@thomasleen.com",
+    "url" : "http://www.thomasleen.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tleen/pos-aggregator/issues"
+  }
+}

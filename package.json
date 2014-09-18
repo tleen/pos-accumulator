@@ -4,7 +4,7 @@
   "description": "Builds a parts-of-speech lookup table of collected strings",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node_modules/grunt-cafe-mocha/node_modules/mocha/bin/mocha --ui bdd --reporter spec --require should test/index.js"
   },
   "repository": {
     "type": "git",
@@ -23,5 +23,14 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/tleen/pos-aggregator/issues"
+  },
+  "dependencies" : {
+    "pos" : "0.1.7"    
+  },
+  "devDependencies" : {
+    "grunt" : "0.4.5",
+    "grunt-cafe-mocha" : "0.1.12",
+    "grunt-contrib-jshint" : "0.10.0",
+    "should" : "4.0.4"
   }
 }

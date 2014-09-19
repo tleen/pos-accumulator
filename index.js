@@ -1,6 +1,8 @@
 'use strict';
 
 // xx - add toString for pa probably like "PosAggregator : 5 entries, 3 types \i"
+// xx - add input validation + tests for validation
+// xx - add to travis
 
 var pkg = require('./package.json'),
 pos = require('pos'),

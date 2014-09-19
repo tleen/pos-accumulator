@@ -52,7 +52,19 @@ describe('aggregated storage', function(){
 });
 
 describe('case sensitivity', function(){
-  it.skip('is not implemented yet', function(){
+  it('should ignore case', function(){
+    var pa = new PosAggregator();
+    pa.put(samples.short);
+    pa.lookup('simple').should.be.a.Object.
+      and.have.properties({count : 3});
+  });
 
+  it('should not ignore case when insensitive is false', function(){
+    var pai = new PosAggregator({insensitive : false});
+    pai.put(samples.short);
+    pai.lookup('simple').should.be.a.Object.
+      and.have.properties({count : 2});
+    pai.lookup('Simple').should.be.a.Object.
+      and.have.properties({count : 1});
   });
 });

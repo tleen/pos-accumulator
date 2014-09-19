@@ -24,7 +24,7 @@ Dictionary.prototype.put = function(key, value){
   entry = this.data[key];
   slot = undefined;
   for(i; i < entry.length; i++){
-    if(entry[i].value === value) slot = entry[i]; // case insens?
+    if(entry[i].value === value) slot = entry[i];
   }
 
   if(slot === undefined) this.data[key].push({value : value, count : 1});

@@ -15,7 +15,8 @@ module.exports = function(grunt){
     test : {
       options : {
 	require : ['should'],
-	ui : 'bdd'
+	ui : 'bdd',
+	reporter : 'spec'
       },
       all : {
 	src : 'test/index.js'

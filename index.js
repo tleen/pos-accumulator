@@ -1,7 +1,7 @@
 'use strict';
 
+// change to accumulator
 // xx - add toString for pa probably like "PosAggregator : 5 entries, 3 types \i"
-// xx - add input validation + tests for validation
 // xx - add to travis
 
 var pkg = require('./package.json'),
@@ -33,7 +33,7 @@ Dictionary.prototype.put = function(key, value){
 
 Dictionary.prototype.get = function(key){
   if(!this.has(key)) return undefined;
-  return this[key];
+  return _.cloneDeep(this.data[key]);
 };
 
 
@@ -54,10 +54,6 @@ Dictionary.prototype.lookup = function(value){
   return returner;
 };
 
-Dictionary.prototype.log = function(){
-  console.log(this.data);
-};
-
 Dictionary.prototype.entries = function(){
   return _.cloneDeep(this.data);
 };
@@ -66,12 +62,17 @@ function PosAggregator(configuration){
   this.version = pkg.version;
   this.dictionary = new Dictionary();
 
-  this.configuration = _.chain({}).defaults(configuration, {insensitive : true}).pick('insensitive').valueOf();
-
+  this.configuration = _.chain({})
+    .defaults(configuration, {insensitive : true})
+    .pick('insensitive')
+    .valueOf();
 }
 
 PosAggregator.prototype.put = function(data){
   // check data, bail on undefined, (convert others to string?)
+
+  if(_.isEmpty(data)) return;
+
   var source = (this.configuration.insensitive ? data.toLowerCase() : data);
   var words = new pos.Lexer().lex(source);
   var tags = new pos.Tagger().tag(words);
@@ -84,6 +85,9 @@ PosAggregator.prototype.put = function(data){
 // a single word
 PosAggregator.prototype.lookup = function(word){
 // screen for string?
+
+  if(_.isEmpty(word)) return null;
+
   var term = (this.configuration.insensitive ? word.toLowerCase() : word);
 
   var found = this.dictionary.lookup(term);
@@ -91,10 +95,13 @@ PosAggregator.prototype.lookup = function(word){
   return null;
 };
 
-PosAggregator.prototype.log = function(){
-  this.dictionary.log();
+PosAggregator.prototype.pos = function(type){
+  if(_.isEmpty(type)) return null;
+
+  return this.dictionary.get(type);
 };
 
+// add a restore from this JSON?
 PosAggregator.prototype.toJSON = function(){
   return JSON.stringify({
     configuration : this.configuration,

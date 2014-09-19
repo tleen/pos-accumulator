@@ -9,21 +9,21 @@ var PosAggregator = require('..'),
 samples = require('./samples.json');
 
 
-describe('versioning', function(){
+describe('version()', function(){
   it('should have same version as package', function(){
     pkg.version.should.equal((new PosAggregator()).version);
   });
 });
 
-describe('single string storage', function(){
+describe('put()', function(){
 
   it('should store a short string', function(){
     var pa = new PosAggregator();
     pa.put(samples.short);
 
     (pa.lookup('nonexist string') === null).should.be.true;
-    pa.lookup('simple').should.be.a.Object.
-      and.have.properties({pos : 'JJ', count : 3});
+    pa.lookup('simple').should.be.a.Object
+      .and.have.properties({pos : 'JJ', count : 3});
   });
 
   it('should store a long string', function(){
@@ -31,13 +31,10 @@ describe('single string storage', function(){
     pa.put(samples.long);
 
     (pa.lookup('nonexist string') === null).should.be.true;
-    pa.lookup('the').should.be.a.Object.
-      and.have.properties({pos : 'DT', count : 13});
+    pa.lookup('the').should.be.a.Object
+      .and.have.properties({pos : 'DT', count : 13});
   });
 
-});
-
-describe('aggregated storage', function(){  
   it('should return same values from single and aggregated', function(){
 
     var paOnce = new PosAggregator();
@@ -49,22 +46,83 @@ describe('aggregated storage', function(){
     paOnce.toJSON().should.equal(paMultiple.toJSON());
   });
 
+  it('should not store empty/null/undefined strings', function(){
+    var pa = new PosAggregator();
+    pa.put(samples.long);
+    
+    var json = pa.toJSON();
+    ['', undefined, null].forEach(function(val){
+      pa.put(val);
+      json.should.equal(pa.toJSON());
+    });
+  });
+
 });
 
-describe('case sensitivity', function(){
+
+describe('{insensitive : true}', function(){
   it('should ignore case', function(){
     var pa = new PosAggregator();
     pa.put(samples.short);
-    pa.lookup('simple').should.be.a.Object.
-      and.have.properties({count : 3});
+    pa.lookup('simple').should.be.a.Object
+      .and.have.properties({count : 3});
   });
 
   it('should not ignore case when insensitive is false', function(){
     var pai = new PosAggregator({insensitive : false});
     pai.put(samples.short);
-    pai.lookup('simple').should.be.a.Object.
-      and.have.properties({count : 2});
-    pai.lookup('Simple').should.be.a.Object.
-      and.have.properties({count : 1});
+    pai.lookup('simple').should.be.a.Object
+      .and.have.properties({count : 2});
+    pai.lookup('Simple').should.be.a.Object
+      .and.have.properties({count : 1});
   });
+});
+
+describe('.term()', function(){
+  var pa = new PosAggregator();
+  pa.put(samples.long);
+
+  it('should return undefined for bad term value', function(){
+    (pa.pos('foo') === undefined).should.be.true;
+  });
+
+  it('should return null for empty term value', function(){
+    (pa.pos() === null).should.be.true;
+  });
+
+  it('should return valid term dictionaries', function(){
+    pa.pos('VBP').should.be.an.Object
+      .and.have.property(0).and.be.an.Object
+      .and.have.properties({value : 'am', count : 2});
+
+    pa.pos('NN').should.be.an.Object
+      .and.have.lengthOf(41);
+  });
+});
+
+
+describe('.lookup()', function(){
+
+  var pa = new PosAggregator();
+  pa.put(samples.long);
+      
+  it('should return null for empty strings', function(){  
+    ['', undefined, null].forEach(function(val){
+      (pa.lookup(val) === null).should.be.true;
+    });
+  });
+
+  it('should return null for non-exist value', function(){
+    (pa.lookup('foobar') === null).should.be.true;
+  });
+
+  it('should lookup proper key, count pairs', function(){
+    pa.lookup('floor').should.be.an.Object
+      .and.have.properties({pos : 'NN', count : 1});
+
+    pa.lookup('the').should.be.an.Object
+      .and.have.properties({pos : 'DT', count : 13});
+  });
+
+
 });

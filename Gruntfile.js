@@ -5,7 +5,7 @@ module.exports = function(grunt){
     jshint : {
       all : {
 	files : {
-	  src : ['Gruntfile.js', 'index.js', 'test/index.js']
+	  src : ['Gruntfile.js', 'index.js', 'test/index.js', 'test/samples.json']
 	},
 	options : {
 	  node : true

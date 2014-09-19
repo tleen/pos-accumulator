@@ -25,7 +25,8 @@
     "url": "https://github.com/tleen/pos-aggregator/issues"
   },
   "dependencies" : {
-    "pos" : "0.1.7"    
+    "lodash" : "2.4.1",
+    "pos" : "0.1.7"
   },
   "devDependencies" : {
     "grunt" : "0.4.5",

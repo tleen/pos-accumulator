@@ -1,4 +1,4 @@
-pos-aggregator
-==============
+POS Accumulator
+===============
 
-Collects strings and builds a parts-of-speech lookup of the contents.
+Collects strings and builds a parts-of-speech lookup table of the contents.

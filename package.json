@@ -1,5 +1,5 @@
 {
-  "name": "pos-aggregator",
+  "name": "pos-accumulator",
   "version": "0.0.1",
   "description": "Builds a parts-of-speech lookup table of collected strings",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/tleen/pos-aggregator.git"
+    "url": "git://github.com/tleen/pos-accumulator.git"
   },
   "keywords": [
     "pos",
@@ -22,7 +22,7 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/tleen/pos-aggregator/issues"
+    "url": "https://github.com/tleen/pos-accumulator/issues"
   },
   "dependencies" : {
     "lodash" : "2.4.1",

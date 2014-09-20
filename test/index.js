@@ -5,20 +5,20 @@
 
 var pkg = require('../package.json');
 
-var PosAggregator = require('..'),
+var PosAccumulator = require('..'),
 samples = require('./samples.json');
 
 
 describe('version()', function(){
   it('should have same version as package', function(){
-    pkg.version.should.equal((new PosAggregator()).version);
+    pkg.version.should.equal((new PosAccumulator()).version);
   });
 });
 
 describe('put()', function(){
 
   it('should store a short string', function(){
-    var pa = new PosAggregator();
+    var pa = new PosAccumulator();
     pa.put(samples.short);
 
     (pa.lookup('nonexist string') === null).should.be.true;
@@ -27,7 +27,7 @@ describe('put()', function(){
   });
 
   it('should store a long string', function(){
-    var pa = new PosAggregator();
+    var pa = new PosAccumulator();
     pa.put(samples.long);
 
     (pa.lookup('nonexist string') === null).should.be.true;
@@ -37,17 +37,17 @@ describe('put()', function(){
 
   it('should return same values from single and aggregated', function(){
 
-    var paOnce = new PosAggregator();
+    var paOnce = new PosAccumulator();
     paOnce.put(samples.multiple.join('\n'));
 
-    var paMultiple = new PosAggregator();
+    var paMultiple = new PosAccumulator();
     samples.multiple.forEach(function(line){ paMultiple.put(line); });
 
     paOnce.toJSON().should.equal(paMultiple.toJSON());
   });
 
   it('should not store empty/null/undefined strings', function(){
-    var pa = new PosAggregator();
+    var pa = new PosAccumulator();
     pa.put(samples.long);
     
     var json = pa.toJSON();
@@ -62,14 +62,14 @@ describe('put()', function(){
 
 describe('{insensitive : true}', function(){
   it('should ignore case', function(){
-    var pa = new PosAggregator();
+    var pa = new PosAccumulator();
     pa.put(samples.short);
     pa.lookup('simple').should.be.a.Object
       .and.have.properties({count : 3});
   });
 
   it('should not ignore case when insensitive is false', function(){
-    var pai = new PosAggregator({insensitive : false});
+    var pai = new PosAccumulator({insensitive : false});
     pai.put(samples.short);
     pai.lookup('simple').should.be.a.Object
       .and.have.properties({count : 2});
@@ -79,7 +79,7 @@ describe('{insensitive : true}', function(){
 });
 
 describe('.term()', function(){
-  var pa = new PosAggregator();
+  var pa = new PosAccumulator();
   pa.put(samples.long);
 
   it('should return undefined for bad term value', function(){
@@ -103,7 +103,7 @@ describe('.term()', function(){
 
 describe('.lookup()', function(){
 
-  var pa = new PosAggregator();
+  var pa = new PosAccumulator();
   pa.put(samples.long);
       
   it('should return null for empty strings', function(){  

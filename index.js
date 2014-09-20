@@ -1,7 +1,7 @@
 'use strict';
 
 // change to accumulator
-// xx - add toString for pa probably like "PosAggregator : 5 entries, 3 types \i"
+// xx - add toString for pa probably like "PosAccumulator : 5 entries, 3 types \i"
 // xx - add to travis
 
 var pkg = require('./package.json'),
@@ -58,7 +58,7 @@ Dictionary.prototype.entries = function(){
   return _.cloneDeep(this.data);
 };
 
-function PosAggregator(configuration){
+function PosAccumulator(configuration){
   this.version = pkg.version;
   this.dictionary = new Dictionary();
 
@@ -68,7 +68,7 @@ function PosAggregator(configuration){
     .valueOf();
 }
 
-PosAggregator.prototype.put = function(data){
+PosAccumulator.prototype.put = function(data){
   // check data, bail on undefined, (convert others to string?)
 
   if(_.isEmpty(data)) return;
@@ -83,7 +83,7 @@ PosAggregator.prototype.put = function(data){
 };
 
 // a single word
-PosAggregator.prototype.lookup = function(word){
+PosAccumulator.prototype.lookup = function(word){
 // screen for string?
 
   if(_.isEmpty(word)) return null;
@@ -95,17 +95,17 @@ PosAggregator.prototype.lookup = function(word){
   return null;
 };
 
-PosAggregator.prototype.pos = function(type){
+PosAccumulator.prototype.pos = function(type){
   if(_.isEmpty(type)) return null;
 
   return this.dictionary.get(type);
 };
 
 // add a restore from this JSON?
-PosAggregator.prototype.toJSON = function(){
+PosAccumulator.prototype.toJSON = function(){
   return JSON.stringify({
     configuration : this.configuration,
     data : this.dictionary.entries()});
 };
 
-module.exports = PosAggregator;
+module.exports = PosAccumulator;

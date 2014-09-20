@@ -61,6 +61,7 @@ Dictionary.prototype.entries = function(){
 function PosAccumulator(configuration){
   this.version = pkg.version;
   this.dictionary = new Dictionary();
+  this.count = 0;
 
   this.configuration = _.chain({})
     .defaults(configuration, {insensitive : true})
@@ -72,6 +73,7 @@ PosAccumulator.prototype.put = function(data){
   // check data, bail on undefined, (convert others to string?)
 
   if(_.isEmpty(data)) return;
+  this.count++;
 
   var source = (this.configuration.insensitive ? data.toLowerCase() : data);
   var words = new pos.Lexer().lex(source);
@@ -99,6 +101,10 @@ PosAccumulator.prototype.pos = function(type){
   if(_.isEmpty(type)) return null;
 
   return this.dictionary.get(type);
+};
+
+PosAccumulator.prototype.putCount = function(){
+  return this.count;
 };
 
 // add a restore from this JSON?

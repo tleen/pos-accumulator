@@ -56,9 +56,30 @@ describe('put()', function(){
       json.should.equal(pa.toJSON());
     });
   });
-
 });
 
+
+describe('.putCount()', function(){
+  var pa = new PosAccumulator();
+  
+  it('should start at 0', function(){
+    pa.putCount().should.be.an.Number
+      .and.equal(0);
+  });
+
+  it('should count puts()', function(){
+    samples.multiple.forEach(function(line){ pa.put(line); });
+    pa.putCount().should.equal(samples.multiple.length);
+  });
+
+  it('should not count bad puts()', function(){
+    pa.put(undefined);
+    pa.put('');
+    pa.putCount().should.equal(samples.multiple.length);
+  });
+
+
+});
 
 describe('{insensitive : true}', function(){
   it('should ignore case', function(){

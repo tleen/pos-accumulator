@@ -56,3 +56,14 @@ Call on accumulator instance to find pos tag and instance count of *string*, wil
   pos: *string of pos tag*,
   count: *int # of times string has been added to accumulator*
 }
+
+## .pos(string)
+
+Call on accumulator instance to get an array of all words associated to that *tag string*, will return **undefined** if tag is not found. Array will consist of objects:
+[{
+ value : *tagged string*
+ count: *int # of times string has been added to accumulator*
+},
+...
+]
+

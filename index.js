@@ -1,6 +1,7 @@
 'use strict';
 
 // change to accumulator
+// xx - document entryCount/putCount in README
 // xx - add toString for pa probably like "PosAccumulator : 5 entries, 3 types \i"
 // xx - add to travis
 

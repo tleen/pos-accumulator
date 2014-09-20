@@ -45,3 +45,14 @@ Configuration option **insensitive** defaults to *true*, when enabled the accumu
 var PosAccumulator = require('pos-accumulator');
 var pa = new PosAccumulator({insensitive : false});
 ```
+
+## .put(string)
+
+Call on accumulator instance to add string content to that accumulator.
+
+## .lookup(string)
+
+Call on accumulator instance to find pos tag and instance count of *string*, will return **null** if string is not in accumulator. Returned object will be {
+  pos: *string of pos tag*,
+  count: *int # of times string has been added to accumulator*
+}

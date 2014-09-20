@@ -1,6 +1,8 @@
 POS Accumulator
 ===============
 
+[![Build Status](https://travis-ci.org/tleen/pos-accumulator.png?branch=master)](https://travis-ci.org/tleen/pos-accumulator)
+
 Collects strings and builds a parts-of-speech lookup table of the contents.
 
 

@@ -1,6 +1,6 @@
 {
   "name": "pos-accumulator",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Builds a parts-of-speech lookup table of collected strings",
   "main": "index.js",
   "scripts": {

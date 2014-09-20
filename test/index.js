@@ -77,8 +77,24 @@ describe('.putCount()', function(){
     pa.put('');
     pa.putCount().should.equal(samples.multiple.length);
   });
+});
 
+describe('.entryCount()', function(){
+  var pa = new PosAccumulator();
+  pa.put(samples.long);
+ 
+  it('should count all terms in accumulator', function(){
+    pa.entryCount().should.be.a.Number
+      .and.equal(114);
+  });
 
+  it('should count single type in accumulator', function(){
+    pa.entryCount('NN').should.be.a.Number
+      .and.equal(41);
+
+    pa.entryCount('VB').should.be.a.Number
+      .and.equal(4);
+  });
 });
 
 describe('{insensitive : true}', function(){

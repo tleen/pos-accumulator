@@ -58,6 +58,17 @@ Dictionary.prototype.entries = function(){
   return _.cloneDeep(this.data);
 };
 
+Dictionary.prototype.count = function(){
+  if(arguments[0]){
+    var key = arguments[0];
+    if(!this.has(key)) return 0;
+    else return this.data[key].length;
+  }
+
+  // if no arg, count everything
+  return _.reduce(this.data, function(result, obj){ return (_.size(obj) + result); }, 0);
+};
+
 function PosAccumulator(configuration){
   this.version = pkg.version;
   this.dictionary = new Dictionary();
@@ -105,6 +116,10 @@ PosAccumulator.prototype.pos = function(type){
 
 PosAccumulator.prototype.putCount = function(){
   return this.count;
+};
+
+PosAccumulator.prototype.entryCount = function(){
+  return this.dictionary.count.apply(this.dictionary, arguments);
 };
 
 // add a restore from this JSON?
